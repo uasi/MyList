@@ -20,6 +20,11 @@ sub append {
     $self->{tail} = ($self->{tail}->{next} = $cell);
 }
 
+sub clear {
+    my ($self) = @_;
+    $self->{head} = $self->{tail} = {next => undef};
+}
+
 sub iterator {
     my ($self) = @_;
     My::List::Iterator->new($self->{head});
