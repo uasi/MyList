@@ -3,11 +3,12 @@ package My::List;
 use 5.012;
 use warnings;
 
+use My::List::Cell;
 use My::List::Iterator;
 
 sub new {
     my ($class) = @_;
-    my $head = {next => undef};
+    my $head = My::List::Cell->new();
     bless {
         head => $head,
         tail => $head
@@ -16,13 +17,12 @@ sub new {
 
 sub append {
     my ($self, $value) = @_;
-    my $cell = {value => $value, next => undef};
-    $self->{tail} = ($self->{tail}->{next} = $cell);
+    $self->{tail} = My::List::Cell->new($self->{tail}, $value);
 }
 
 sub clear {
     my ($self) = @_;
-    $self->{head} = $self->{tail} = {next => undef};
+    $self->{head} = $self->{tail} = My::List::Cell->new();
 }
 
 sub iterator {
